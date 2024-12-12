@@ -6,7 +6,6 @@ use App\Enum\Car\Status;
 use App\Http\Requests\Cars\Save as SaveRequest;
 use App\Models\Brand;
 use App\Models\Car;
-use App\Models\Comment;
 use App\Models\Tag;
 
 class CarController extends Controller
