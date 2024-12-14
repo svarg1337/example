@@ -10,6 +10,7 @@ use Illuminate\Validation\Validator;
 
 class CommentsRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -40,8 +41,6 @@ class CommentsRequest extends FormRequest
 
     protected function commentableIdRule()
     {
-        if (in_array($this->commentable_type, [Car::class, Article::class])) {
-            return Rule::exists($this->commentable_type, 'id');
-        }
+        return Rule::exists($this->commentable_type, 'id');
     }
 }
