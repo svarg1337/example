@@ -7,14 +7,18 @@ use App\Http\Requests\Cars\Save as SaveRequest;
 use App\Models\Brand;
 use App\Models\Car;
 use App\Models\Tag;
+use App\Services\Hello;
+use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    public function index()
+    
+    public function index(Request $request)
     {
+       // dd($request->session()->all());
         $bodyTypes = config('app-car.body');
         // $cars = Car::with('brand.country', 'tags')->latest()->get();
-        $cars = Car::with('brand.country', 'tags')->ofActive()->latest()->get();
+        $cars = Car::with('brand', 'tags')->latest()->get();
 
         return view('cars.index', compact('cars', 'bodyTypes'));
     }

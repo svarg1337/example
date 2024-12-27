@@ -4,11 +4,16 @@ namespace App\Services;
 
 class Hello
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    public string $a;
+    public string $b;
+
+    public function __construct(string $b)
     {
-        
+        $this->a = 'Vsem hello';
+        $this->b = $b;
+    }
+
+    public function foo() {
+        return $this;
     }
 }

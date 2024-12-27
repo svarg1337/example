@@ -4,17 +4,31 @@ namespace App\Http\Requests\Commnets;
 
 use App\Models\Article;
 use App\Models\Car;
+use App\Models\Comment;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Fluent;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 
 class CommentsRequest extends FormRequest
 {
-    protected $stopOnFirstFailure = true;
+    /* Тут происходит предварительная валидация поля commentable_type.
+       Она нужна для потому что значение этого поля используется
+       в правиле валидации поля commentable_id в качестве указателя на таблицу в бд.
+       commentable_type должно содержать корректное имя модели. 
+       Используется белый список разрешенных моделей.
+       Он хранися в константе Comment::COMMENTABLE_MODELS
+    */
+    public function prepareForValidation(): void
+    {
+        if (! in_array($this->commentable_type, Comment::COMMENTABLE_MODELS)) {
+            throw ValidationException::withMessages(
+                ['commentable_id' => trans('validation.in', ['attribute' => 'commentable_id'])]
+            );
+        }
+    }
 
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -28,19 +42,35 @@ class CommentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'body' => ['bail', 'required'],
-            'commentable_type' => ['bail', 'required', $this->commentableTypeRule()],
-            'commentable_id' => ['bail', 'required', $this->commentableIdRule()],
+            'body' => ['required'],
+            // Rule::in тут не обязателен, тк идентичен той проверке которая уже была в prepareForValidation()
+            'commentable_type' => ['required', Rule::in(Comment::COMMENTABLE_MODELS)], 
+            'commentable_id' => ['required', Rule::exists($this->commentable_type, 'id')],
         ];
     }
 
-    protected function commentableTypeRule()
+    public function passedValidation(): void
     {
-        return Rule::in([Car::class, Article::class]);
+        // dd($this->validator);
     }
 
-    protected function commentableIdRule()
-    {
-        return Rule::exists($this->commentable_type, 'id');
-    }
+    // public function withValidator(Validator $validator)
+    // {
+    //     $validator->sometimes(
+    //         'commentable_id',
+    //         $this->commentableIdRules(),
+    //         fn(Fluent $input) => in_array($input->commentable_type, Comment::COMMENTABLE_MODELS)
+    //     );
+    // }
+
+    // public function after(): array
+    // {
+    //     return [
+    //         function (Validator $validator) {
+
+    //         }
+    //     ];
+    // }
+
+ 
 }

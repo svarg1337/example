@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Comment extends Model
 {
-    // Как передать в метод контроллера полиморфную свзязь (тип, к какой сущности этот коммент принадлежит)?
+    // Белый список моделей к которым может быть прикреплен Comment
+    public const COMMENTABLE_MODELS = [Car::class, Article::class];
 
     protected $guarded = [];
 

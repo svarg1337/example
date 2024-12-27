@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Interface\ICommentable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Article extends Model
+class Article extends Model implements ICommentable
 {
     protected $fillable = ['title', 'body'];
 

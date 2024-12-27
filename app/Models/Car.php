@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Enum\Car\Status;
+use App\Interface\ICommentable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Car extends Model
+class Car extends Model implements ICommentable
 {
     //use SoftDeletes;
     //protected $fillable = ['brand_id', 'model', 'price', 'body_type', 'vin'];

@@ -22,34 +22,29 @@
         <div class="container border-bottom pb-2">
             <div class="row">
                 <div class="d-flex justify-content-end ">
-                    
+                    @auth
                     <div class="p-2">
-                    {{ auth()->user()->email }}
+                        {{ auth()->user()->email }}
                     </div>
                     <div class="p-2 bg-warning">
                         <a href="{{ route('auth.sessions.logout') }}">Выйти</a>
                     </div>
-  
+                    @else
+                    <div class="p-2 bg-warning">
+                        <a href="{{ route('auth.sessions.create') }}">Вход</a>
+                    </div>
+                    <div class="p-2 bg-danger">
+                        <a href="{{ route('auth.registration.create') }}">Регистрация</a>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="container">
-
-    <x-alert.status />
-    
-        <div class="row">
-            <div class="col col-3">
-                menu
-            </div>
-            <div class="col col-9">
-                <h1>{{ $h1 ?? $title }}</h1>
-                {{ $slot }}
-            </div>
-        </div>
-
-
+    <div class="container py-2">
+        <h1>{{ $h1 ?? $title }}</h1>
+        {{ $slot }}
     </div>
 
     <footer>

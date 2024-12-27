@@ -16,9 +16,9 @@ class Status extends Component
     {
         $alertMessages = config('messages.alert');
         if (session('status')) {
-            $this->alertMessage = session('status');
+           // $this->alertMessage = session('status');
 
-            //$this->alertMessage = $alertMessages[session('status')];
+            $this->alertMessage = $alertMessages[session('status')];
         }
 
         //dd(session('status'));
