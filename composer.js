@@ -1,6 +1,6 @@
 vesmPrivet = {
-    "name": "laravel/laravelAAABBB",
-    "type": "project",
+    "name": "laravel/laravelAAABBBSSS",
+    "type": "projectAAA",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
