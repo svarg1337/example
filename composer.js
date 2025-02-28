@@ -1,5 +1,5 @@
 vesmPrivet = {
-    "name": "laravel/laravel",
+    "name": "laravel/laravelAAA",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
